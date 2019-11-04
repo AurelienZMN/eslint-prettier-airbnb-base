@@ -98,6 +98,10 @@ Once files are created, you may edit to your liking.
 }
 ```
 
+# Todo
+
+Add more options, VueJS, TypeScript... 
+
 ---
 
 This script was inspired by Jeffrey Zhen's [tutorial](https://blog.echobind.com/integrating-prettier-eslint-airbnb-style-guide-in-vscode-47f07b5d7d6a).
