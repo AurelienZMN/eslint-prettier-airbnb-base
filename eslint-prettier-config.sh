@@ -77,11 +77,10 @@ echo
 
 # Tab width
 echo "What tab width do you want to set for ESLint and Prettier? (Airbnb: 2, recommanded: 4)"
-select tab_width in "2" "4" "Cancel"; do
+select tab_width in "2" "4"; do
   case $tab_width in
     2 ) break;;
     4 ) break;;
-    Cancel ) exit;;
   esac
 done
 echo
