@@ -12,7 +12,7 @@
    exec 3<&1;bash <&3 <(curl https://raw.githubusercontent.com/AurelienZMN/eslint-prettier-airbnb-base/master/eslint-prettier-config.sh 2> /dev/null)
    ```
 
-3. Make selections for your preference of package manager (npm or yarn), file format (.js or .json), max-line size, and trailing commas (none, es5, all).
+3. Make selections for your preference of package manager (npm or yarn), file format (.json or .js), max-line size, tab width and trailing commas (none, es5, all).
 
 4. Look in your project's root directory and notice the two newly added/updated config files:
    - `.eslintrc.json` (or `.eslintrc.js`)
@@ -55,31 +55,31 @@ Once files are created, you may edit to your liking.
 "extends": [
     "airbnb-base",
     "plugin:prettier/recommended",
-  ],
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "es6": true,
-    "node": true
-  },
-  "rules": {
-    "prettier/prettier": ["error"],
-    "indent": ["error", 4],
-    "max-len": [
-      "warn",
-      {
-        "code": (SET BY USER),
-        "tabWidth": (SET BY USER),
-        "comments": (SET BY USER),
-        "ignoreComments": false,
-        "ignoreTrailingComments": true,
-        "ignoreUrls": true,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true,
-        "ignoreRegExpLiterals": true
-      }
-    ]
-  }
+    ],
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "rules": {
+        "prettier/prettier": ["error"],
+        "indent": ["error", (SET BY USER)],
+        "max-len": [
+            "warn",
+            {
+                "code": (SET BY USER),
+                "tabWidth": (SET BY USER),
+                "comments": (SET BY USER),
+                "ignoreComments": false,
+                "ignoreTrailingComments": true,
+                "ignoreUrls": true,
+                "ignoreStrings": true,
+                "ignoreTemplateLiterals": true,
+                "ignoreRegExpLiterals": true
+            }
+        ]
+    }
 }
 ```
 
