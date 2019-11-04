@@ -76,6 +76,16 @@ done
 echo
 
 # Tab width
+echo "What tab width do you want to set for ESLint and Prettier? (Airbnb: 2, recommanded: 4)"
+select tab_width in "2" "4" "Cancel"; do
+  case $tab_width in
+    2 ) break;;
+    3 ) break;;
+    Cancel ) exit;;
+  esac
+done
+echo
+
 while ! $finished; do
   read -p "What tab width do you want to set for ESLint and Prettier? (Airbnb: 2, recommanded: 4)"
   if [[ $REPLY =~ ^[0-9]$ ]]; then
@@ -151,7 +161,7 @@ else
       "warn",
       {
         "code": '${max_len_val}',
-        "tabWidth": '${tab_width_val}',
+        "tabWidth": '${tab_width}',
         "comments": '${max_len_val}',
         "ignoreComments": false,
         "ignoreTrailingComments": true,
@@ -181,8 +191,11 @@ else
   > .prettierrc${config_extension} # truncates existing file (or creates empty)
 
   echo ${config_opening}'
+  "arrowParens": "always",
   "printWidth": '${max_len_val}',
+  "semi": true,
   "singleQuote": true,
+  "tabWidth": '${tab_width}',
   "trailingComma": "'${trailing_comma_pref}'"
 }' >> .prettierrc${config_extension}
 fi
