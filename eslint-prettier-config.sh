@@ -66,21 +66,21 @@ done
 # Trailing Commas Prompt
 echo "What style of trailing commas do you want to enforce with Prettier? (recommanded: es5)"
 echo -e "${YELLOW}>>>>> See https://prettier.io/docs/en/options.html#trailing-commas for more details.${NC}"
-select trailing_comma_pref in "none" "es5" "all"; do
+select trailing_comma_pref in "es5" "all" "none"; do
   case $trailing_comma_pref in
-    none ) break;;
     es5 ) break;;
     all ) break;;
+    none ) break;; 
   esac
 done
 echo
 
 # Tab width
 echo "What tab width do you want to set for ESLint and Prettier? (Airbnb: 2, recommanded: 4)"
-select tab_width in "2" "4"; do
-  case $tab_width in
-    2 ) break;;
-    4 ) break;;
+select tab_width_choices in "2" "4"; do
+  case $tab_width_choices in
+    2 ) tab_width='2'; break;;
+    4 ) tab_width='4'; break;;
   esac
 done
 echo
