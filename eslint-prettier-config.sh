@@ -27,10 +27,10 @@ echo
 
 # File Format Prompt
 echo "Which ESLint and Prettier configuration format do you prefer? (recommanded: .json)"
-select config_extension in ".js" ".json" "Cancel"; do
+select config_extension in ".json" ".js" "Cancel"; do
   case $config_extension in
-    .js ) config_opening='module.exports = {'; break;;
     .json ) config_opening='{'; break;;
+    .js ) config_opening='module.exports = {'; break;;
     Cancel ) exit;;
   esac
 done
@@ -80,7 +80,7 @@ echo "What tab width do you want to set for ESLint and Prettier? (Airbnb: 2, rec
 select tab_width in "2" "4" "Cancel"; do
   case $tab_width in
     2 ) break;;
-    3 ) break;;
+    4 ) break;;
     Cancel ) exit;;
   esac
 done
