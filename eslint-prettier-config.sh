@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 
 # Package Manager Prompt
 echo
-echo "Which package manager are you using?"
+echo "Which package manager are you using? (recommanded: Yarn)"
 select package_command_choices in "Yarn" "npm" "Cancel"; do
   case $package_command_choices in
     Yarn ) pkg_cmd='yarn add'; break;;
@@ -26,7 +26,7 @@ done
 echo
 
 # File Format Prompt
-echo "Which ESLint and Prettier configuration format do you prefer?"
+echo "Which ESLint and Prettier configuration format do you prefer? (recommanded: .json)"
 select config_extension in ".js" ".json" "Cancel"; do
   case $config_extension in
     .js ) config_opening='module.exports = {'; break;;
@@ -53,7 +53,7 @@ finished=false
 
 # Max Line Length Prompt
 while ! $finished; do
-  read -p "What max line length do you want to set for ESLint and Prettier? (Recommendation: 80)"
+  read -p "What max line length do you want to set for ESLint and Prettier? (Airbnb: 80, recommanded: 200)"
   if [[ $REPLY =~ ^[0-9]{2,3}$ ]]; then
     max_len_val=$REPLY
     finished=true
@@ -64,7 +64,7 @@ while ! $finished; do
 done
 
 # Trailing Commas Prompt
-echo "What style of trailing commas do you want to enforce with Prettier?"
+echo "What style of trailing commas do you want to enforce with Prettier? (recommanded: es5)"
 echo -e "${YELLOW}>>>>> See https://prettier.io/docs/en/options.html#trailing-commas for more details.${NC}"
 select trailing_comma_pref in "none" "es5" "all"; do
   case $trailing_comma_pref in
@@ -74,6 +74,19 @@ select trailing_comma_pref in "none" "es5" "all"; do
   esac
 done
 echo
+
+# Tab width
+while ! $finished; do
+  read -p "What tab width do you want to set for ESLint and Prettier? (Airbnb: 2, recommanded: 4)"
+  if [[ $REPLY =~ ^[0-9]$ ]]; then
+    tab_width_val=$REPLY
+    finished=true
+    echo
+  else
+    echo -e "${YELLOW}Please choose a width of one digit, e.g. 2 or 4.${NC}"
+  fi
+done
+
 
 # Checks for existing prettierrc files
 if [ -f ".prettierrc.js" -o -f "prettier.config.js" -o -f ".prettierrc.yaml" -o -f ".prettierrc.yml" -o -f ".prettierrc.json" -o -f ".prettierrc.toml" -o -f ".prettierrc" ]; then
@@ -104,7 +117,7 @@ $pkg_cmd -D eslint prettier
 echo
 echo -e "2/5 ${YELLOW}Conforming to Airbnb's JavaScript Style Guide... ${NC}"
 echo
-$pkg_cmd -D eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-react babel-eslint
+$pkg_cmd -D eslint-config-airbnb-base eslint-plugin-import babel-eslint
 
 echo
 echo -e "3/5 ${LCYAN}Making ESlint and Prettier play nice with each other... ${NC}"
@@ -122,25 +135,23 @@ else
 
   echo ${config_opening}'
   "extends": [
-    "airbnb",
-    "plugin:prettier/recommended",
-    "prettier/react"
-  ],
+    "airbnb-base",
+    "plugin:prettier/recommended"
+    ],
   "env": {
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "jest": true,
     "node": true
   },
   "rules": {
-    "jsx-a11y/href-no-hash": ["off"],
-    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
+    "prettier/prettier": ["error"],
+    "indent": ["error", 4],
     "max-len": [
       "warn",
       {
         "code": '${max_len_val}',
-        "tabWidth": 2,
+        "tabWidth": '${tab_width_val}',
         "comments": '${max_len_val}',
         "ignoreComments": false,
         "ignoreTrailingComments": true,
@@ -149,6 +160,14 @@ else
         "ignoreTemplateLiterals": true,
         "ignoreRegExpLiterals": true
       }
+    ],
+    "import/no-extraneous-dependencies": [
+        "error",
+        {
+            "devDependencies": false,
+            "optionalDependencies": false,
+            "peerDependencies": false
+        }
     ]
   }
 }' >> .eslintrc${config_extension}
