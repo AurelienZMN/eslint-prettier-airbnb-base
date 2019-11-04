@@ -155,7 +155,7 @@ else
   },
   "rules": {
     "prettier/prettier": ["error"],
-    "indent": ["error", 4],
+    "indent": ["error", '${tab_width}'],
     "max-len": [
       "warn",
       {
